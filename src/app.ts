@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 // Testing
 app.get('/', async (req: Request, res: Response) => {
   // throw new Error('Testing error logger')
-  res.send('Hello from Aitch university auth');
+  res.send('Hello from PC builder');
 });
 
 // Application routes
