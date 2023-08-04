@@ -11,3 +11,9 @@ export type IProduct = {
   rating: number;
   isFeatured: boolean;
 };
+
+export type IProductFilters = {
+  searchTerm?: string;
+  category?: string;
+  isFeatured?: boolean;
+};
