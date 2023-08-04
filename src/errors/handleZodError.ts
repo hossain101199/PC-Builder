@@ -1,5 +1,5 @@
 import { ZodError, ZodIssue } from 'zod';
-import IGenericErrorResponse from '../interfaces/common';
+import { IGenericErrorResponse } from '../interfaces/common';
 import IGenericErrorMessage from '../interfaces/error';
 
 const handleZodError = (error: ZodError): IGenericErrorResponse => {
