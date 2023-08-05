@@ -8,5 +8,6 @@ const express_1 = __importDefault(require("express"));
 const product_controller_1 = require("./product.controller");
 const router = express_1.default.Router();
 router.post('/', product_controller_1.productController.createProduct);
+router.get('/:id', product_controller_1.productController.getProductById);
 router.get('/', product_controller_1.productController.getAllProducts);
 exports.productsRoutes = router;

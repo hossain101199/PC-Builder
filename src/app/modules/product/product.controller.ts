@@ -20,6 +20,19 @@ const createProduct: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const getProductById: RequestHandler = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await productService.getProductByIdFromDB(id);
+
+  sendResponse<IProduct>(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Product created successfully',
+    data: result,
+  });
+});
+
 const getAllProducts: RequestHandler = catchAsync(async (req, res) => {
   const filters = pick(req.query, productFilterableFields);
 
@@ -33,7 +46,7 @@ const getAllProducts: RequestHandler = catchAsync(async (req, res) => {
   sendResponse<IProduct[]>(res, {
     statusCode: 200,
     success: true,
-    message: 'Product retrieved successfully',
+    message: 'Products retrieved successfully',
     meta: result.meta,
     data: result.data,
   });
@@ -41,5 +54,6 @@ const getAllProducts: RequestHandler = catchAsync(async (req, res) => {
 
 export const productController = {
   createProduct,
+  getProductById,
   getAllProducts,
 };

@@ -1,4 +1,5 @@
 import { SortOrder } from 'mongoose';
+import ApiError from '../../../errors/ApiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -8,6 +9,19 @@ import { Product } from './product.model';
 
 const createProductInDB = async (payload: IProduct): Promise<IProduct> => {
   const result = (await Product.create(payload)).populate('category');
+  return result;
+};
+
+const getProductByIdFromDB = async (id: string): Promise<IProduct> => {
+  const result = await Product.findById(id).populate('category');
+
+  if (!result) {
+    throw new ApiError(
+      404,
+      `Error: product with ID ${id} is not found. Please verify the provided ID and try again`
+    );
+  }
+
   return result;
 };
 
@@ -68,5 +82,6 @@ const getAllProductsFromDB = async (
 
 export const productService = {
   createProductInDB,
+  getProductByIdFromDB,
   getAllProductsFromDB,
 };

@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const auth_route_1 = require("../modules/auth/auth.route");
 const category_route_1 = require("../modules/category/category.route");
 const product_route_1 = require("../modules/product/product.route");
+const review_route_1 = require("../modules/review/review.route");
 const routes = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -20,6 +21,10 @@ const moduleRoutes = [
     {
         path: '/products',
         route: product_route_1.productsRoutes,
+    },
+    {
+        path: '/reviews',
+        route: review_route_1.reviewRoutes,
     },
 ];
 moduleRoutes.forEach(route => routes.use(route.path, route.route));

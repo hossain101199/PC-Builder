@@ -12,47 +12,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.productController = void 0;
+exports.reviewController = void 0;
 const pagination_1 = require("../../../constants/pagination");
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const pick_1 = __importDefault(require("../../../shared/pick"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
-const product_constant_1 = require("./product.constant");
-const product_service_1 = require("./product.service");
-const createProduct = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = req.body;
-    const result = yield product_service_1.productService.createProductInDB(product);
+const review_service_1 = require("./review.service");
+const createReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const review = req.body;
+    const result = yield review_service_1.reviewService.createReviewInDB(review);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
-        message: 'Product created successfully',
+        message: 'Review created successfully',
         data: result,
     });
 }));
-const getProductById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const result = yield product_service_1.productService.getProductByIdFromDB(id);
-    (0, sendResponse_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: 'Product created successfully',
-        data: result,
-    });
-}));
-const getAllProducts = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const filters = (0, pick_1.default)(req.query, product_constant_1.productFilterableFields);
+const getReviewsByBookId = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
     const paginationOptions = (0, pick_1.default)(req.query, pagination_1.paginationFields);
-    const result = yield product_service_1.productService.getAllProductsFromDB(filters, paginationOptions);
+    const result = yield review_service_1.reviewService.getReviewsByBookIdFromDB(id, paginationOptions);
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
-        message: 'Products retrieved successfully',
+        message: 'Review retrieved successfully',
         meta: result.meta,
         data: result.data,
     });
 }));
-exports.productController = {
-    createProduct,
-    getProductById,
-    getAllProducts,
+exports.reviewController = {
+    createReview,
+    getReviewsByBookId,
 };

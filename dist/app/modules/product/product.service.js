@@ -8,13 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.productService = void 0;
+const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const paginationHelper_1 = require("../../../helpers/paginationHelper");
 const product_constant_1 = require("./product.constant");
 const product_model_1 = require("./product.model");
 const createProductInDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = (yield product_model_1.Product.create(payload)).populate('category');
+    return result;
+});
+const getProductByIdFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield product_model_1.Product.findById(id).populate('category');
+    if (!result) {
+        throw new ApiError_1.default(404, `Error: product with ID ${id} is not found. Please verify the provided ID and try again`);
+    }
     return result;
 });
 const getAllProductsFromDB = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
@@ -59,5 +70,6 @@ const getAllProductsFromDB = (filters, paginationOptions) => __awaiter(void 0, v
 });
 exports.productService = {
     createProductInDB,
+    getProductByIdFromDB,
     getAllProductsFromDB,
 };
